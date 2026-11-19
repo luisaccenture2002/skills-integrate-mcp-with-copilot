@@ -15,15 +15,31 @@ A super simple FastAPI application that allows students to view and sign up for 
    pip install fastapi uvicorn
    ```
 
-2. Run the application:
+2. Create a teacher account. The command prompts for a password and stores only
+   a salted password hash in the local, git-ignored `src/teachers.json` file:
 
    ```
-   python app.py
+   python -m src.manage_teachers teacher1
    ```
 
-3. Open your browser and go to:
-   - API documentation: http://localhost:8000/docs
-   - Alternative documentation: http://localhost:8000/redoc
+   Run the same command again to update that teacher's password.
+
+3. Run the application from the repository root:
+
+   ```
+   uvicorn src.app:app --reload
+   ```
+
+4. Open http://localhost:8000. Anyone can view activities and participants.
+   Teachers must sign in to add or remove participants.
+
+The teacher session is held in the running app process and expires after eight
+hours. Restarting the app signs out all teachers. This lightweight session
+storage is intended for the single-process exercise app, not multi-worker
+production deployments.
+
+The API documentation is available at http://localhost:8000/docs and
+http://localhost:8000/redoc.
 
 ## API Endpoints
 
